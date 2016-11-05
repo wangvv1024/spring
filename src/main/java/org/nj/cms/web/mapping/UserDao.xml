@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.nj.cms.web.dao.UserDao">
+	<resultMap type="org.nj.cms.web.model.UserModel" id="BaseResultMap">
+		<id column="id" property="id" />
+		<result column="age" property="age" />
+		<result column="uname" property="userName" />
+	</resultMap>
+	<sql id="user_fields">
+		id,uname,age
+	</sql>
+
+	<select id="selectList" resultMap="BaseResultMap"
+		parameterType="org.nj.cms.web.model.UserModel">
+		select
+		<include refid="user_fields" />
+		from cms_user
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="user_fields" />
+		from cms_user
+		where id = #{id}
+	</select>
+
+	<insert id="insertSelective" parameterType="org.nj.cms.web.model.UserModel"
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO
+		cms_user(uname,age)
+		VALUES(#{userName},#{age})
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Object">
+		DELETE FROM
+		cms_user WHERE id = #{id}
+	</delete>
+
+</mapper>
